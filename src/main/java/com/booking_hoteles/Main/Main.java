@@ -134,7 +134,7 @@ public class Main {
                         }
 
                         int diaFin = 0;
-                        while (diaFin > 31 || diaFin < 1) {
+                        while (diaFin > 31 || diaFin < 1 || diaFin <= diaInicio) {
                             System.out.print("Ingrese el día de finalización del hospedaje (1-31): ");
                             diaFin = scanner.nextInt();
                         }
