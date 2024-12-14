@@ -238,9 +238,61 @@ public class Main {
 
                     confirmarHabitaciones(hotel, diaInicio, diaFin, adultos, menores, cantidadHabitaciones, disponibilidadHoteles);
                     break;
-//                case 3:
-//                    realizarReserva(scanner, disponibilidadHoteles, instalaciones);
-//                    break;
+                case 3:
+                    System.out.println("\n--- Reservar Habitaciones ---");
+                    System.out.print("Ingrese el Hotel: ");
+                    String nombreHotel = scanner.nextLine();
+
+                    System.out.print("Ingrese el Tipo de Habitación: ");
+                    String tipoHabitacion = scanner.nextLine();
+
+                    System.out.print("Ingrese el día de inicio del hospedaje: ");
+                    int diaInici = scanner.nextInt();
+
+                    System.out.print("Ingrese el día de finalización del hospedaje: ");
+                    int diaFi = scanner.nextInt();
+
+                    System.out.print("Ingrese la cantidad de habitaciones: ");
+                    int cantidadHabitacion = scanner.nextInt();
+                    scanner.nextLine(); // Consumir el salto de línea pendiente
+
+                    System.out.print("Ingrese su Nombre: ");
+                    String nombre = scanner.nextLine();
+
+                    System.out.print("Ingrese su Apellido: ");
+                    String apellido = scanner.nextLine();
+
+                    System.out.print("Ingrese su Email: ");
+                    String email = scanner.nextLine();
+
+                    System.out.print("Ingrese su Nacionalidad: ");
+                    String nacionalidad = scanner.nextLine();
+
+                    System.out.print("Ingrese su Número de Teléfono: ");
+                    String telefono = scanner.nextLine();
+
+                    System.out.print("Ingrese la Hora Aproximada de Llegada (HH:MM): ");
+                    String horaLlegada = scanner.nextLine();
+
+                    // Llamar al método realizarReserva con los datos ingresados
+                    realizarReserva(
+                            nombreHotel,
+                            tipoHabitacion,
+                            diaInici,
+                            diaFi,
+                            cantidadHabitacion,
+                            nombre,
+                            apellido,
+                            email,
+                            nacionalidad,
+                            telefono,
+                            horaLlegada,
+                            disponibilidadHoteles
+
+                    );
+
+                    break;
+
 //                case 4:
 //                    cambiarReserva(scanner, disponibilidadHoteles, instalaciones);
 //                    break;
@@ -416,4 +468,154 @@ public class Main {
         }
     }
 
+    public static void realizarReserva(
+            String nombreHotel,
+            String tipoHabitacion,
+            int diaInicio,
+            int diaFin,
+            int cantidadHabitaciones,
+            String nombre,
+            String apellido,
+            String email,
+            String nacionalidad,
+            String telefono,
+            String horaLlegada,
+            boolean[][][][] disponibilidadHoteles
+    ) {
+        boolean hotelEncontrado = false;
+        boolean habitacionReservada = false;
+
+        // Buscar el hotel
+        for (int i = 0; i < instalaciones.length; i++) {
+            if (instalaciones[i][0][0].equalsIgnoreCase(nombreHotel)) {
+                hotelEncontrado = true;
+
+                // Buscar el tipo de habitación
+                for (int j = 0; j < disponibilidadHoteles[i].length; j++) {
+                    if (instalaciones[i][j + 1][0].equalsIgnoreCase(tipoHabitacion)) {
+                        int habitacionesDisponibles = 0;
+
+                        // Contar habitaciones disponibles
+                        for (int k = 0; k < disponibilidadHoteles[i][j].length; k++) {
+                            boolean disponible = true;
+
+                            // Verificar disponibilidad para el rango de fechas
+                            for (int d = diaInicio - 1; d < diaFin; d++) {
+                                if (disponibilidadHoteles[i][j][k][d]) {
+                                    disponible = false;
+                                    break;
+                                }
+                            }
+
+                            if (disponible) {
+                                habitacionesDisponibles++;
+                            }
+                        }
+
+                        // Si hay suficientes habitaciones disponibles, proceder a reservar
+                        if (habitacionesDisponibles >= cantidadHabitaciones) {
+                            int habitacionesReservadas = 0;
+
+                            for (int k = 0; k < disponibilidadHoteles[i][j].length; k++) {
+                                boolean disponible = true;
+
+                                // Verificar disponibilidad para el rango de fechas
+                                for (int d = diaInicio - 1; d < diaFin; d++) {
+                                    if (disponibilidadHoteles[i][j][k][d]) {
+                                        disponible = false;
+                                        break;
+                                    }
+                                }
+
+                                // Realizar la reserva para esta habitación
+                                if (disponible) {
+                                    for (int d = diaInicio - 1; d < diaFin; d++) {
+                                        disponibilidadHoteles[i][j][k][d] = true;
+                                    }
+                                    habitacionesReservadas++;
+                                    if (habitacionesReservadas >= cantidadHabitaciones) {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            habitacionReservada = true;
+
+                            // Generar el registro de la reserva
+                            System.out.println("Reserva realizada:");
+                            System.out.println("Nombre: " + nombre + " " + apellido);
+                            System.out.println("Email: " + email);
+                            System.out.println("Nacionalidad: " + nacionalidad);
+                            System.out.println("Teléfono: " + telefono);
+                            System.out.println("Hora aproximada de llegada: " + horaLlegada);
+                            System.out.println("Hotel: " + nombreHotel);
+                            System.out.println("Tipo de habitación: " + tipoHabitacion);
+                            System.out.println("Fechas: del día " + diaInicio + " al día " + diaFin);
+                            System.out.println("Cantidad de habitaciones reservadas: " + cantidadHabitaciones);
+                            System.out.println("Se ha realizado la reserva con éxito.");
+                            break;
+                        }
+                    }
+                }
+
+                if (!habitacionReservada) {
+                    System.out.println("No hay suficientes habitaciones disponibles del tipo " + tipoHabitacion + " para las fechas solicitadas.");
+                }
+                break;
+            }
+        }
+
+        if (!hotelEncontrado) {
+            System.out.println("No se encontró el hotel con el nombre especificado.");
+        }
+    }
+
+
+    public static void cambiarReserva(Scanner scanner, boolean[][][][] disponibilidadHoteles,String[][] habitaciones) {
+        System.out.println("\nCambiar reserva...");
+        System.out.print("Ingrese el hotel (1-10): ");
+        int hotel = scanner.nextInt() - 1;
+        scanner.nextLine(); // Limpiar buffer
+        System.out.print("Ingrese el tipo de habitación (Simple, Doble, Familiar, Suite, Deluxe): ");
+        String tipoHabitacion = scanner.nextLine();
+        System.out.print("Ingrese el día de inicio (1-31): ");
+        int diaInicio = scanner.nextInt();
+        System.out.print("Ingrese el día de fin (1-31): ");
+        int diaFin = scanner.nextInt();
+        System.out.print("Ingrese el mes (1-12): ");
+        int mes = scanner.nextInt();
+
+        // Validar tipo de habitación
+        int tipoIndex = -1;
+        for (int i = 0; i < habitaciones.length; i++) {
+            if (habitaciones[i][0].equalsIgnoreCase(tipoHabitacion)) {
+                tipoIndex = i;
+                break;
+            }
+        }
+
+        if (tipoIndex == -1) {
+            System.out.println("Tipo de habitación no encontrado.");
+            return;
+        }
+
+        // Verificar disponibilidad antes de cambiar la reserva
+        boolean disponible = true;
+        for (int dia = diaInicio; dia <= diaFin; dia++) {
+            if (disponibilidadHoteles[hotel][tipoIndex][dia - 1][mes - 1]) {
+                disponible = false;
+                break;
+            }
+        }
+
+        if (!disponible) {
+            System.out.println("Lo sentimos, no hay disponibilidad para las fechas seleccionadas.");
+            return;
+        }
+
+        // Actualizar disponibilidad
+        for (int dia = diaInicio; dia <= diaFin; dia++) {
+            disponibilidadHoteles[hotel][tipoIndex][dia - 1][mes - 1] = true; // Marcar como ocupado
+        }
+        }
 }
