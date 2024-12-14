@@ -106,7 +106,7 @@ public class Main {
         while (true) {
             System.out.println("\n--- Aplicación Booking Hoteles ---");
             System.out.println("1. Buscar hoteles");
-            System.out.println("2. Verificar disponibilidad");
+            System.out.println("2. Buscar habitaciones");
             System.out.println("3. Reservar habitación");
             System.out.println("4. Cambiar reserva");
             System.out.println("5. Salir");
@@ -201,13 +201,47 @@ public class Main {
                     scanner.nextLine(); // Limpiar el buffer
 
                     break;
-//                case 2:
-//                    verificarDisponibilidad(scanner, disponibilidadHoteles, instalaciones);
-//                    break;
+                case 2:
+                    System.out.println("\n--- Buscar Habitaciones ---");
+                    System.out.print("Ingrese el Hotel: ");
+                    String hotel = scanner.nextLine();
+
+                    int diaInicio = 0;
+                    while (diaInicio > 31 || diaInicio < 1) {
+                        System.out.print("Ingrese el día de inicio del hospedaje (1-31): ");
+                        diaInicio = scanner.nextInt();
+                    }
+
+                    int diaFin = 0;
+                    while (diaFin > 31 || diaFin < 1) {
+                        System.out.print("Ingrese el día de finalización del hospedaje (1-31): ");
+                        diaFin = scanner.nextInt();
+                    }
+
+                    int adultos = 0;
+                    while (adultos < 1 || adultos > 20) {
+                        System.out.print("Ingrese la cantidad de adultos (1-20): ");
+                        adultos = scanner.nextInt();
+                    }
+
+                    int menores = -1;
+                    while (menores < 0 || menores > 10) {
+                        System.out.print("Ingrese la cantidad de niños (0-10): ");
+                        menores = scanner.nextInt();
+                    }
+
+                    int cantidadHabitaciones = 0;
+                    while (cantidadHabitaciones < 1 || cantidadHabitaciones > 5) {
+                        System.out.print("Ingrese la cantidad de habitaciones (1-5): ");
+                        cantidadHabitaciones = scanner.nextInt();
+                    }
+
+                    confirmarHabitaciones(hotel, diaInicio, diaFin, adultos, menores, cantidadHabitaciones, disponibilidadHoteles);
+                    break;
 //                case 3:
 //                    realizarReserva(scanner, disponibilidadHoteles, instalaciones);
 //                    break;
-                case 4:
+//                case 4:
 //                    cambiarReserva(scanner, disponibilidadHoteles, instalaciones);
 //                    break;
                 case 5:
@@ -313,5 +347,73 @@ public class Main {
         }
     }
 
+    public static void confirmarHabitaciones(
+            String nombreHotel,
+            int diaInicio,
+            int diaFin,
+            int adultos,
+            int menores,
+            int cantidadHabitaciones,
+            boolean[][][][] disponibilidadHoteles
+    ) {
+        System.out.println("\nConfirmación de habitaciones en el hotel: " + nombreHotel);
+        boolean encontrado = false;
+
+        for (int i = 0; i < instalaciones.length; i++) {
+            // Verifica si el nombre del hotel coincide
+            if (instalaciones[i][0][0].equalsIgnoreCase(nombreHotel)) {
+                encontrado = true;
+
+                System.out.println("Fechas: del día " + diaInicio + " al día " + diaFin);
+                System.out.println("Adultos: " + adultos + ", Niños: " + menores + ", Cantidad de habitaciones: " + cantidadHabitaciones);
+                System.out.println("\nTipos de habitaciones disponibles:");
+
+                for (int j = 0; j < disponibilidadHoteles[i].length; j++) {
+                    int capacidadAdultos = Integer.parseInt(instalaciones[i][j + 1][3]);
+                    int capacidadMenores = Integer.parseInt(instalaciones[i][j + 1][4]);
+
+                    // Verifica si la capacidad de la habitación es adecuada
+                    if (capacidadAdultos >= adultos && capacidadMenores >= menores) {
+                        int habitacionesDisponibles = 0;
+
+                        // Verificar disponibilidad para todas las habitaciones de este tipo
+                        for (int k = 0; k < disponibilidadHoteles[i][j].length; k++) {
+                            boolean disponible = true;
+
+                            // Revisa la disponibilidad para el rango de fechas
+                            for (int d = diaInicio - 1; d < diaFin; d++) {
+                                if (disponibilidadHoteles[i][j][k][d]) {
+                                    disponible = false;
+                                    break;
+                                }
+                            }
+
+                            if (disponible) {
+                                habitacionesDisponibles++;
+                                if (habitacionesDisponibles >= cantidadHabitaciones) {
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Si hay suficientes habitaciones disponibles, muestra las características y el precio
+                        if (habitacionesDisponibles >= cantidadHabitaciones) {
+                            System.out.println("- Tipo: " + instalaciones[i][j + 1][0]);
+                            System.out.println("  Características: " + instalaciones[i][j + 1][2]);
+                            System.out.println("  Precio por noche: $" + instalaciones[i][j + 1][1]);
+                            System.out.println("  Habitaciones disponibles: " + habitacionesDisponibles);
+                            System.out.println();
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No se encontró el hotel con el nombre especificado.");
+        }
+    }
 
 }
