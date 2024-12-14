@@ -81,15 +81,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Disponibilidad de los hoteles: la cantidad de tipos de habitaciones varía por instalación
+        // Disponibilidad de los hoteles
         boolean[][][][] disponibilidadHoteles = new boolean[instalaciones.length][][][];
 
-        // Inicializamos la disponibilidad para cada instalación
+        // Disponibilidad para cada instalación
         for(int i = 0; i < instalaciones.length; i++) {
             // Calculamos la cantidad de tipos de habitaciones para esta instalación
             int numTiposHabitaciones = instalaciones[i].length - 1; // Restamos 1 para excluir el primer registro (nombre, ciudad, tipo, puntuación)
 
-            // Inicializamos el arreglo de la instalación si con la cantidad de tipos de habitaciones
+            // Arreglo de la instalación si con la cantidad de tipos de habitaciones
             disponibilidadHoteles[i] = new boolean[numTiposHabitaciones][][];
 
             // Para cada tipo de habitación de la instalación
@@ -105,10 +105,10 @@ public class Main {
         // Bucle principal
         while (true) {
             System.out.println("\n--- Aplicación Booking Hoteles ---");
-            System.out.println("1. Buscar hoteles");
+            System.out.println("1. Buscar instalaciones");
             System.out.println("2. Buscar habitaciones");
-            System.out.println("3. Reservar habitación");
-            System.out.println("4. Cambiar reserva");
+            System.out.println("3. Reservar");
+            System.out.println("4. Modificar reserva");
             System.out.println("5. Salir");
             System.out.print("Seleccione una opción: ");
             int opcion = scanner.nextInt();
@@ -139,12 +139,6 @@ public class Main {
                             diaFin = scanner.nextInt();
                         }
 
-                        int mes = 0;
-                        while (mes > 12 || mes < 1) {
-                            System.out.print("Ingrese el mes (1-12): ");
-                            mes = scanner.nextInt();
-                        }
-
                         int adultos = 0;
                         while (adultos < 1 || adultos > 20) {
                             System.out.print("Ingrese la cantidad de adultos (1-20): ");
@@ -172,12 +166,6 @@ public class Main {
                         }
 
                         int diaFin = diaInicio;
-
-                        int mes = 0;
-                        while (mes > 12 || mes < 1) {
-                            System.out.print("Ingrese el mes (1-12): ");
-                            mes = scanner.nextInt();
-                        }
 
                         int adultos = 0;
                         while (adultos < 1 || adultos > 20) {
@@ -552,7 +540,7 @@ public class Main {
                             System.out.println("Tipo de habitación: " + tipoHabitacion);
                             System.out.println("Fechas: del día " + diaInicio + " al día " + diaFin);
                             System.out.println("Cantidad de habitaciones reservadas: " + cantidadHabitaciones);
-                            System.out.println("Se ha realizado la reserva con éxito.");
+                            System.out.println("\nSe ha realizado la reserva con éxito!.");
                             break;
                         }
                     }
