@@ -345,7 +345,7 @@ public class Main {
 
                             // Cálculo del precio base
                             double precioPorHabitacion = Double.parseDouble(instalaciones[i][j + 1][1]);
-                            double precioTotalBase = precioPorHabitacion * cantidadHabitaciones * (diaFin - diaInicio + 1);
+                            double precioTotalBase = precioPorHabitacion * cantidadHabitaciones * (diaFin - diaInicio );
 
                             // Aplicar reglas de precio
                             double precioTotalAjustado = precioTotalBase;
@@ -371,7 +371,7 @@ public class Main {
                             System.out.println("  Capacidad: " + capacidadAdultos + " adultos, " + capacidadMenores + " niños");
                             if (!tipoAlojamiento.equals("Día de Sol")) {
                                 System.out.println("  Habitaciones disponibles: " + habitacionesDisponibles);
-                                System.out.println("  Total dias: " + (diaFin - diaInicio + 1));
+                                System.out.println("  Total noches: " + (diaFin - diaInicio ));
                             }
                             System.out.println("  Precio total base: $" + precioTotalBase);
                             System.out.println("  Precio total ajustado: $" + precioTotalAjustado);
@@ -530,7 +530,7 @@ public class Main {
                             habitacionReservada = true;
 
                             // Generar el registro de la reserva
-                            System.out.println("Reserva realizada:");
+                            System.out.println("\nReserva realizada:");
                             System.out.println("Nombre: " + nombre + " " + apellido);
                             System.out.println("Email: " + email);
                             System.out.println("Nacionalidad: " + nacionalidad);
