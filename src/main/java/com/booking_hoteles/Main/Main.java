@@ -314,7 +314,19 @@ public class Main {
                     break;
 
                 case 4:
-                    modificarReserva(reservas, disponibilidadHoteles);
+                    System.out.println("\n--- Modificar Reserva ---");
+                    String correo = "";
+                    while (correo.length() <5) {
+                        System.out.print("Ingrese su correo electrónico: ");
+                        correo = scanner.nextLine();
+                    }
+
+                    String nacimiento = "";
+                    while (nacimiento.length()<10) {
+                        System.out.print("Ingrese su fecha de nacimiento (YYYY-MM-DD): ");
+                        nacimiento = scanner.nextLine();
+                    }
+                    modificarReserva(correo, nacimiento, reservas, disponibilidadHoteles);
                     break;
                 case 5:
                     System.out.println("¡Gracias por usar la aplicación!");
@@ -594,22 +606,8 @@ public class Main {
     }
 
 
-    public static void modificarReserva(String[][][][] reservas, boolean[][][][] disponibilidadHoteles) {
-        System.out.println("\n--- Modificar Reserva ---");
-        String email = "";
-        while (email.length() <5) {
-            System.out.print("Ingrese su correo electrónico: ");
-            email = scanner.nextLine();
-        }
-
-        String fechaNacimiento = "";
-        while (fechaNacimiento.length()<10) {
-            System.out.print("Ingrese su fecha de nacimiento (YYYY-MM-DD): ");
-            fechaNacimiento = scanner.nextLine();
-        }
-
+    public static void modificarReserva(String email,String fechaNacimiento,String[][][][] reservas, boolean[][][][] disponibilidadHoteles) {
         boolean reservaEncontrada = false;
-
 
         for (int i = 0; i < reservas.length; i++) {
             for (int j = 0; j < reservas[i].length; j++) {
