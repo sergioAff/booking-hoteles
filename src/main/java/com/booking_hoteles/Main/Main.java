@@ -38,6 +38,10 @@ public class Main {
                     {"Día de Sol","50", "Viaje a la playa Playa Larga, Almuerzo y Cena incluidos, Refrigerio", "4", "3", "6"},
             },
             {
+                    {"Playa del Sol", "Santiago de Cuba", "Día de Sol", "4"},
+                    {"Día de Sol","22", "Local con terraza, Aire acondicionado, Vista al mar, Almuerzo y Cena incluidos, Piscina", "2", "2", "10"},
+            },
+            {
                     {"Cueva de los Verdes", "Lanzarote", "Finca", "4"},
                     {"Finca","35", "Vista al mar, Terraza, Aire acondicionado, Almuerzo incluido, Piscina", "2", "2", "9"}
             },
