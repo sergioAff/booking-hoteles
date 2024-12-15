@@ -81,12 +81,16 @@ public class Main {
             },
     };
 
+
+
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
         // Disponibilidad de los hoteles
         boolean[][][][] disponibilidadHoteles = new boolean[instalaciones.length][][][];
+
+        String[][][][] reservas = new String[instalaciones.length][][][];
 
         // Disponibilidad para cada instalación
         for(int i = 0; i < instalaciones.length; i++) {
@@ -95,6 +99,7 @@ public class Main {
 
             // Arreglo de la instalación si con la cantidad de tipos de habitaciones
             disponibilidadHoteles[i] = new boolean[numTiposHabitaciones][][];
+            reservas[i] = new String[numTiposHabitaciones][][];
 
             // Para cada tipo de habitación de la instalación
             for (int j = 0; j < numTiposHabitaciones; j++) {
@@ -103,7 +108,8 @@ public class Main {
 
                 // Inicializamos la tercera dimensión para el tipo de habitación j
                 disponibilidadHoteles[i][j] = new boolean[cantHabitaciones][31]; // 31 días en el mes
-            }
+
+                reservas[i][j] = new String[cantHabitaciones][31];}
         }
 
         // Bucle principal
@@ -266,7 +272,6 @@ public class Main {
                     System.out.print("Ingrese la Hora Aproximada de Llegada (HH:MM): ");
                     String horaLlegada = scanner.nextLine();
 
-                    // Llamar al método realizarReserva con los datos ingresados
                     realizarReserva(
                             nombreHotel,
                             tipoHabitacion,
@@ -279,8 +284,8 @@ public class Main {
                             nacionalidad,
                             telefono,
                             horaLlegada,
-                            disponibilidadHoteles
-
+                            disponibilidadHoteles,
+                            reservas
                     );
 
                     break;
@@ -472,7 +477,8 @@ public class Main {
             String nacionalidad,
             String telefono,
             String horaLlegada,
-            boolean[][][][] disponibilidadHoteles
+            boolean[][][][] disponibilidadHoteles,
+            String[][][][] reservas
     ) {
         boolean hotelEncontrado = false;
         boolean habitacionReservada = false;
@@ -523,6 +529,8 @@ public class Main {
                                 if (disponible) {
                                     for (int d = diaInicio - 1; d < diaFin; d++) {
                                         disponibilidadHoteles[i][j][k][d] = true;
+                                        reservas[i][j][k][d] = "Nombre: " + nombre + ", " + "Apellido: " + apellido + ", " + "Email: " + email + ", " + "Nacionalidad: " + nacionalidad + ", " + "Teléfono: " + telefono + ", " + "Hora aproximada de llegada: " + horaLlegada;
+
                                     }
                                     habitacionesReservadas++;
                                     if (habitacionesReservadas >= cantidadHabitaciones) {
