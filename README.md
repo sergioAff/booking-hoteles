@@ -14,7 +14,8 @@ El proyecto permite consultar, modificar y gestionar información relacionada co
 
 A continuación, se muestra el historial de commits con la representación gráfica:
 
-![Git Log](https://github.com/user-attachments/assets/1d9ed1de-63c1-4dea-b00a-ca977d0f28ac)
+![Git Log](https://github.com/user-attachments/assets/cf228cfa-fddc-488e-a5b5-a5b392471502)
+
 
 
 Para clonar el proyecto:
