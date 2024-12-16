@@ -389,7 +389,14 @@ public class Main {
 
                             // Cálculo del precio base
                             double precioPorHabitacion = Double.parseDouble(instalaciones[i][j + 1][1]);
-                            double precioTotalBase = precioPorHabitacion * cantidadHabitaciones * (diaFin - diaInicio );
+                            double precioTotalBase;
+                            if (tipoAlojamiento.equalsIgnoreCase("Día de Sol")) {
+                                precioTotalBase = precioPorHabitacion * cantidadHabitaciones * (diaFin - diaInicio +1);
+                            }
+                            else {
+                                precioTotalBase = precioPorHabitacion * cantidadHabitaciones * (diaFin - diaInicio );
+                            }
+
 
                             // Aplicar reglas de precio
                             double precioTotalAjustado = precioTotalBase;
